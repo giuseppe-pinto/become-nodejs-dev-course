@@ -18,8 +18,13 @@
 
         <br>
 
-        <input class="form-control" placeholder="Name">
+        <input id="name" class="form-control" placeholder="Name"> </input>
         <br>
+
+        <textarea id="message" class="form-control" placeholder="Message"> </textarea>
+        
+        <br>
+
 
         <button id="send" class="btn btn-success">Send</button>
     </div>
@@ -35,8 +40,15 @@
     $(() => {
 
         $("#send").click(() => {
-            getMessages()
+            var message = 
+            {   
+                name: $("#name").val(),
+                message: $("#message").val()
+            }
+
+            postMessages(message)
         })
+        getMessages()
 
     })
 
@@ -51,8 +63,15 @@
         $.get('http://localhost:3000/messages', (data) => {
             
             data.forEach(addMessage)
+
         })
 
     }
+    
+    function  postMessages(message) {
+
+        $.post('http://localhost:3000/messages', message)
+    }
+
 
 </script>
