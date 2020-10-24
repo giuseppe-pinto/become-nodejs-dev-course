@@ -35,3 +35,27 @@ describe('get messages', () => {
     })
 
 })
+
+
+describe('get message from user', () => {
+
+    it('should return 200 OK',  (done) => {
+
+        request.get('http://localhost:3000/messages/mario', 
+            (err, res) => {
+                console.log(res.body)
+                expect(res.statusCode).toEqual(200)
+                done()
+        })
+
+    })
+
+    it('name should be mario', (done) => {
+        request.get('http://localhost:3000/messages/mario', 
+            (err, res) => {
+                expect(JSON.parse(res.body)[0].name).toEqual('mario')
+                done()
+        })
+    })
+
+})

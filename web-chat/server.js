@@ -38,6 +38,16 @@ app.get('/messages', (req, res) => {
     
 })
 
+app.get('/messages/:user', (req, res) => {
+
+    var user = req.params.user
+
+    Message.find({name: user}, (err, message) => {
+        res.send(message)
+    })
+    
+})
+
 app.post('/messages', async (req, res) => {
 
     try{
