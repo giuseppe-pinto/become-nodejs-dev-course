@@ -5,6 +5,7 @@ var dbConnectivities = require('./dbConnectivities.json')
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
 var mongoose = require('mongoose')
+const e = require('express')
 mongoose.set('useUnifiedTopology', true)
 mongoose.set('useNewUrlParser', true);
 
@@ -43,6 +44,15 @@ app.post('/messages', (req, res) => {
         if(err){
             sendStatus(500)
         }
+
+        Message.findOneAndDelete({message: 'cazzo'}, (err, censured) => {
+            
+           if(censured){
+                console.log('found a censured word', censured.message, 'from', censured.name)
+            }
+            
+        })
+
 
         io.emit('message', req.body)
         res.sendStatus(200)
