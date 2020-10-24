@@ -1,18 +1,22 @@
 {
-  "name": "05_01",
+  "name": "web-chat",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jasmine",
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "giuseppe pinto",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^5.10.10",
     "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "jasmine": "^3.6.2",
+    "request": "^2.88.2"
   }
 }
