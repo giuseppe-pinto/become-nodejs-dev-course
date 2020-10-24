@@ -8,6 +8,7 @@ var mongoose = require('mongoose')
 const e = require('express')
 mongoose.set('useUnifiedTopology', true)
 mongoose.set('useNewUrlParser', true);
+mongoose.Promise = Promise
 
 
 //it takes the static file from the direcory
@@ -40,25 +41,27 @@ app.get('/messages', (req, res) => {
 app.post('/messages', (req, res) => { 
     var message = new Message(req.body)
     
-    message.save((err) => {
-        if(err){
-            sendStatus(500)
+    message
+    .save()
+    .then(() => {
+        console.log('saved')
+        return Message.findOne({message: 'badword'})
+    })
+    .then(censored => {
+        if(censored){
+            console.log('found a censored word', censored.message, 'from', censored.name)
+            return Message.deleteOne({_id: censored.id})
         }
-
-        Message.findOneAndDelete({message: 'badword'}, (err, censured) => {
-            
-           if(censured){
-                console.log('found a censured word', censured.message, 'from', censured.name)
-            }
-            
-        })
-
-
         io.emit('message', req.body)
         res.sendStatus(200)
     })
+    .catch((err) => {
+        res.sendStatus(500)
+        console.error(err)
+    })
 
 })
+
 
 io.on('connection', (socket) => {
     console.log("new User Connected")
