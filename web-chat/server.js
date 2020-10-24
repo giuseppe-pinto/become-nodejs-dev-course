@@ -45,7 +45,7 @@ app.post('/messages', (req, res) => {
             sendStatus(500)
         }
 
-        Message.findOneAndDelete({message: 'cazzo'}, (err, censured) => {
+        Message.findOneAndDelete({message: 'badword'}, (err, censured) => {
             
            if(censured){
                 console.log('found a censured word', censured.message, 'from', censured.name)
